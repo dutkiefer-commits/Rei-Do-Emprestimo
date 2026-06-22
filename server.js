@@ -1,4 +1,4 @@
-const express = require('express');
+﻿const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const jwt = require('jsonwebtoken');
@@ -15,13 +15,13 @@ app.use(express.urlencoded({ extended: true }));
 function authenticateJWT(req, res, next) {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ error: 'Autenticação necessária.' });
+    return res.status(401).json({ error: 'AutenticaÃ§Ã£o necessÃ¡ria.' });
   }
 
   const token = authHeader.split(' ')[1];
   jwt.verify(token, JWT_SECRET, (err, payload) => {
     if (err) {
-      return res.status(403).json({ error: 'Token inválido ou expirado.' });
+      return res.status(403).json({ error: 'Token invÃ¡lido ou expirado.' });
     }
     req.user = payload;
     next();
@@ -31,7 +31,7 @@ function authenticateJWT(req, res, next) {
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) {
-    return res.status(400).json({ error: 'Username e senha são obrigatórios.' });
+    return res.status(400).json({ error: 'Username e senha sÃ£o obrigatÃ³rios.' });
   }
 
   const passwordHash = hashPassword(password);
@@ -43,7 +43,7 @@ app.post('/api/login', (req, res) => {
         return res.status(500).json({ error: 'Erro interno no servidor.' });
       }
       if (!row) {
-        return res.status(401).json({ error: 'Credenciais inválidas.' });
+        return res.status(401).json({ error: 'Credenciais invÃ¡lidas.' });
       }
 
       const token = jwt.sign({ id: row.id, username: row.username }, JWT_SECRET, {
@@ -61,7 +61,7 @@ app.get('/api/profile', authenticateJWT, (req, res) => {
 app.post('/api/profile/change-password', authenticateJWT, (req, res) => {
   const { currentPassword, newPassword } = req.body;
   if (!currentPassword || !newPassword) {
-    return res.status(400).json({ error: 'Senha atual e nova senha são obrigatórias.' });
+    return res.status(400).json({ error: 'Senha atual e nova senha sÃ£o obrigatÃ³rias.' });
   }
 
   const currentHash = hashPassword(currentPassword);
@@ -183,7 +183,7 @@ app.get('/api/dashboard', authenticateJWT, (req, res) => {
 
     db.all(dueSoonQuery, [todayString, tomorrowString], (dueErr, dueRows) => {
       if (dueErr) {
-        return res.status(500).json({ error: 'Erro ao buscar vencimentos próximos.' });
+        return res.status(500).json({ error: 'Erro ao buscar vencimentos prÃ³ximos.' });
       }
 
       db.all(remindersQuery, [], (remErr, reminderRows) => {
@@ -214,3 +214,4 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
+

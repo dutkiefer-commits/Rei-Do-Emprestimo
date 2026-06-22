@@ -1,4 +1,4 @@
-const apiBase = '/api';
+﻿const apiBase = '/api';
 const appShell = document.getElementById('appShell');
 const loginSection = document.getElementById('loginSection');
 const loginForm = document.getElementById('loginForm');
@@ -60,7 +60,7 @@ function fetchJson(endpoint, options = {}) {
     const contentType = res.headers.get('content-type');
     const body = contentType && contentType.includes('application/json') ? await res.json() : null;
     if (!res.ok) {
-      throw new Error((body && body.error) || 'Erro na requisição');
+      throw new Error((body && body.error) || 'Erro na requisiÃ§Ã£o');
     }
     return body;
   });
@@ -91,7 +91,7 @@ function formatDate(dateString) {
 }
 
 function getLastDaysText(days) {
-  if (days <= 0) return 'Vence hoje/amanhã';
+  if (days <= 0) return 'Vence hoje/amanhÃ£';
   return `${days} dia(s)`;
 }
 
@@ -136,11 +136,11 @@ function loadDashboard() {
   return fetchJson('/dashboard').then((data) => {
     totalReceber.textContent = formatCurrency(data.total_receber);
     vencendoCount.textContent = `${data.vencendo.length} contrato(s)`;
-    atrasoCount.textContent = `${data.lembretes.filter((item) => item.pago === 0).length} pendência(s)`;
+    atrasoCount.textContent = `${data.lembretes.filter((item) => item.pago === 0).length} pendÃªncia(s)`;
     reminderTableBody.innerHTML = data.lembretes
       .map((item) => `
         <tr>
-          <td>${item.cliente_nome || 'Cliente não informado'}</td>
+          <td>${item.cliente_nome || 'Cliente nÃ£o informado'}</td>
           <td>${item.cliente_telefone || '-'}</td>
           <td>${formatDate(item.vencimento)}</td>
           <td>${formatCurrency(item.valor)}</td>
@@ -203,7 +203,7 @@ loginForm.addEventListener('submit', (event) => {
   const password = document.getElementById('loginPassword').value;
 
   if (!username || !password) {
-    displayMessage(loginMessage, 'Preencha usuário e senha.', true);
+    displayMessage(loginMessage, 'Preencha usuÃ¡rio e senha.', true);
     return;
   }
 
@@ -321,3 +321,4 @@ function initializeApp() {
 }
 
 initializeApp();
+

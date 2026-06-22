@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   color-scheme: light;
   --bg: #f9fafb;
   --surface: #ffffff;
@@ -453,3 +453,4 @@ select:focus {
     grid-template-columns: 1fr;
   }
 }
+

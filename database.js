@@ -1,4 +1,4 @@
-const sqlite3 = require('sqlite3').verbose();
+﻿const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
@@ -64,7 +64,7 @@ function initDatabase() {
 
     db.get('SELECT id FROM usuarios WHERE username = ?', [adminUsername], (err, row) => {
       if (err) {
-        console.error('Erro ao verificar usuário admin:', err.message);
+        console.error('Erro ao verificar usuÃ¡rio admin:', err.message);
         return;
       }
 
@@ -74,9 +74,9 @@ function initDatabase() {
           [adminUsername, adminHash],
           (insertErr) => {
             if (insertErr) {
-              console.error('Erro ao criar usuário admin:', insertErr.message);
+              console.error('Erro ao criar usuÃ¡rio admin:', insertErr.message);
             } else {
-              console.log('Usuário admin criado com sucesso. Login padrão: admin / admin123');
+              console.log('UsuÃ¡rio admin criado com sucesso. Login padrÃ£o: admin / admin123');
             }
           }
         );
@@ -91,3 +91,4 @@ module.exports = {
   db,
   hashPassword,
 };
+
