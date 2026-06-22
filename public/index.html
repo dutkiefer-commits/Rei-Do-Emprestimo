@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GestÃ£o de CobranÃ§as e EmprÃ©stimos</title>
+  <title>Gestao de Cobrancas e Emprestimos</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -13,14 +13,14 @@
         <span class="brand-mark">G</span>
         <div>
           <h1>Jurista Finance</h1>
-          <p>GestÃ£o de CobranÃ§as</p>
+          <p>Gestao de Cobrancas</p>
         </div>
       </div>
       <nav class="nav-menu">
         <button class="nav-item active" data-section="dashboard">Dashboard</button>
         <button class="nav-item" data-section="clientes">Clientes</button>
         <button class="nav-item" data-section="contratos">Contratos</button>
-        <button class="nav-item" data-section="perfil">Perfil / SeguranÃ§a</button>
+        <button class="nav-item" data-section="perfil">Perfil / Seguranca</button>
         <button class="nav-item" data-section="ajuda">Aprenda a usar</button>
       </nav>
       <button id="logoutButton" class="secondary-button">Sair</button>
@@ -29,10 +29,10 @@
     <main class="main-area">
       <section id="loginSection" class="card centered-card">
         <h2>Login do Administrador</h2>
-        <p>Use o usuÃ¡rio padrÃ£o admin / admin123 para acessar.</p>
+        <p>Use o usuario padrao admin / admin123 para acessar.</p>
         <form id="loginForm" class="form-grid">
           <label>
-            UsuÃ¡rio
+            Usuario
             <input type="text" id="loginUsername" autocomplete="username" />
           </label>
           <label>
@@ -48,7 +48,7 @@
         <header class="page-header">
           <div>
             <h2 id="pageTitle">Dashboard</h2>
-            <p class="subtitle">Painel administrativo de cobranÃ§as e contratos</p>
+            <p class="subtitle">Painel administrativo de cobrancas e contratos</p>
           </div>
           <div class="user-chip">
             <span id="profileUsername">Admin</span>
@@ -62,20 +62,20 @@
               <p class="large-value" id="totalReceber">R$ 0,00</p>
             </article>
             <article class="info-card">
-              <h3>Vencendo Hoje/AmanhÃ£</h3>
+              <h3>Vencendo Hoje/Amanha</h3>
               <p class="large-value" id="vencendoCount">0 contratos</p>
             </article>
             <article class="info-card">
               <h3>Clientes em Atraso</h3>
-              <p class="large-value" id="atrasoCount">0 pendÃªncias</p>
+              <p class="large-value" id="atrasoCount">0 pendencias</p>
             </article>
           </div>
 
           <div class="card">
             <div class="card-header">
               <div>
-                <h3>Quem estÃ¡ me devendo</h3>
-                <p>Lista de contratos pendentes com contatos rÃ¡pidos via WhatsApp.</p>
+                <h3>Quem esta me devendo</h3>
+                <p>Lista de contratos pendentes com contatos rapidos via WhatsApp.</p>
               </div>
             </div>
             <div class="table-wrapper">
@@ -87,7 +87,7 @@
                     <th>Vencimento</th>
                     <th>Valor</th>
                     <th>Atraso</th>
-                    <th>AÃ§Ã£o</th>
+                    <th>Acao</th>
                   </tr>
                 </thead>
                 <tbody id="reminderTableBody"></tbody>
@@ -106,7 +106,7 @@
               <label>CPF/CNPJ<input type="text" id="clienteCpfCnpj" /></label>
               <label>Telefone<input type="text" id="clienteTelefone" /></label>
               <label>WhatsApp<input type="text" id="clienteWhatsapp" /></label>
-              <label>EndereÃ§o<input type="text" id="clienteEndereco" /></label>
+              <label>Endereco<input type="text" id="clienteEndereco" /></label>
               <label>E-mail<input type="email" id="clienteEmail" /></label>
               <label>Chave Pix<input type="text" id="clientePix" /></label>
               <button type="submit" class="accent-button">Salvar Cliente</button>
@@ -147,7 +147,7 @@
               <label>Valor emprestado (R$)
                 <input type="number" id="contratoValor" step="0.01" min="0" />
               </label>
-              <label>Data do EmprÃ©stimo
+              <label>Data do Emprestimo
                 <input type="date" id="contratoData" />
               </label>
               <label>Vencimento
@@ -168,7 +168,7 @@
                   <tr>
                     <th>Cliente</th>
                     <th>Valor</th>
-                    <th>EmprÃ©stimo</th>
+                    <th>Emprestimo</th>
                     <th>Vencimento</th>
                     <th>Status</th>
                   </tr>
@@ -182,7 +182,7 @@
         <section id="perfil" class="page-section hidden">
           <div class="card profile-card">
             <div class="card-header">
-              <h3>Perfil e SeguranÃ§a</h3>
+              <h3>Perfil e Seguranca</h3>
             </div>
             <p class="small-text">Altere a senha do administrador de forma segura.</p>
             <form id="senhaForm" class="form-grid small-grid">
@@ -201,9 +201,9 @@
             </div>
             <ol class="help-list">
               <li><strong>Cadastrar um cliente:</strong> acesse a aba "Clientes", preencha os dados e clique em "Salvar Cliente".</li>
-              <li><strong>Criar um contrato:</strong> vÃ¡ para "Contratos", selecione o cliente, informe valor, data do emprÃ©stimo e vencimento.</li>
-              <li><strong>Monitorar lembretes:</strong> no dashboard, verifique quem estÃ¡ devendo, faÃ§a a cobranÃ§a pelo botÃ£o do WhatsApp e acompanhe atrasos.</li>
-              <li><strong>Alterar senha:</strong> na aba "Perfil / SeguranÃ§a", insira a senha atual e a nova senha para manter sua conta segura.</li>
+              <li><strong>Criar um contrato:</strong> va para "Contratos", selecione o cliente, informe valor, data do emprestimo e vencimento.</li>
+              <li><strong>Monitorar lembretes:</strong> no dashboard, verifique quem esta devendo, faca a cobranca pelo botao do WhatsApp e acompanhe atrasos.</li>
+              <li><strong>Alterar senha:</strong> na aba "Perfil / Seguranca", insira a senha atual e a nova senha para manter sua conta segura.</li>
             </ol>
           </div>
         </section>
