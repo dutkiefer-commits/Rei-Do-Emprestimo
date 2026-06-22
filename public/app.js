@@ -84,6 +84,9 @@ if (isHosted) {
 
   fetchJson = async (endpoint, options = {}) => {
     const method = (options.method || 'GET').toUpperCase();
+    const headers = options.headers || {};
+    const token = getToken && getToken();
+    if (token && !headers.Authorization) headers.Authorization = `Bearer ${token}`;
     const body = options.body ? JSON.parse(options.body) : null;
 
     // /login
@@ -101,7 +104,6 @@ if (isHosted) {
 
     // autenticar chamadas que exigem token
     if (['/profile', '/profile/change-password', '/clientes', '/contratos', '/dashboard'].includes(endpoint)) {
-      const headers = options.headers || {};
       const auth = headers.Authorization || (options.headers && options.headers.Authorization);
       if (!auth || !auth.startsWith('Bearer ') || auth.split(' ')[1] !== demoToken) {
         const e = new Error('Autenticacao necessária.');
