@@ -66,6 +66,91 @@ function fetchJson(endpoint, options = {}) {
   });
 }
 
+// Se estiver hospedado no GitHub Pages, usar uma API mock local (demo)
+const isHosted = location.hostname.endsWith('github.io') || location.hostname.includes('githubusercontent.com');
+if (isHosted) {
+  console.log('Executando em modo demo (hosted) — usando API mock local');
+  const demo = {
+    users: [{ id: 1, username: 'admin', password: 'admin123' }],
+    clientes: [
+      { id: 1, nome: 'Cliente Exemplo', cpf_cnpj: '000.000.000-00', telefone: '11999990000', whatsapp: '11999990000', email: 'contato@exemplo.com' },
+    ],
+    contratos: [
+      { id: 1, cliente_id: 1, valor: 1500, data_emprestimo: '2026-06-01', vencimento: '2026-07-01', pago: 0 },
+    ],
+  };
+
+  let demoToken = null;
+
+  fetchJson = async (endpoint, options = {}) => {
+    const method = (options.method || 'GET').toUpperCase();
+    const body = options.body ? JSON.parse(options.body) : null;
+
+    // /login
+    if (endpoint === '/login' && method === 'POST') {
+      const { username, password } = body || {};
+      const user = demo.users.find((u) => u.username === username && u.password === password);
+      if (!user) {
+        const e = new Error('Credenciais invalidas.');
+        e.status = 401;
+        throw e;
+      }
+      demoToken = 'demo-token-' + Date.now();
+      return { token: demoToken, username: user.username };
+    }
+
+    // autenticar chamadas que exigem token
+    if (['/profile', '/profile/change-password', '/clientes', '/contratos', '/dashboard'].includes(endpoint)) {
+      const headers = options.headers || {};
+      const auth = headers.Authorization || (options.headers && options.headers.Authorization);
+      if (!auth || !auth.startsWith('Bearer ') || auth.split(' ')[1] !== demoToken) {
+        const e = new Error('Autenticacao necessária.');
+        e.status = 401;
+        throw e;
+      }
+    }
+
+    if (endpoint === '/profile' && method === 'GET') {
+      return { username: 'admin' };
+    }
+
+    if (endpoint === '/dashboard' && method === 'GET') {
+      return {
+        total_receber: demo.contratos.reduce((s, c) => s + (c.pago ? 0 : c.valor), 0),
+        vencendo: demo.contratos.slice(0, 1),
+        lembretes: demo.contratos.map((c) => ({ ...c, cliente_nome: demo.clientes.find((x) => x.id === c.cliente_id)?.nome || 'Cliente' , dias_atraso: 0 })),
+      };
+    }
+
+    if (endpoint === '/clientes' && method === 'GET') {
+      return demo.clientes;
+    }
+
+    if (endpoint === '/clientes' && method === 'POST') {
+      const novo = { id: demo.clientes.length + 1, ...body };
+      demo.clientes.unshift(novo);
+      return { id: novo.id };
+    }
+
+    if (endpoint === '/contratos' && method === 'GET') {
+      return demo.contratos.map((c) => ({ ...c, cliente_nome: demo.clientes.find((x) => x.id === c.cliente_id)?.nome || 'Cliente' }));
+    }
+
+    if (endpoint === '/contratos' && method === 'POST') {
+      const novo = { id: demo.contratos.length + 1, ...body };
+      demo.contratos.unshift(novo);
+      return { id: novo.id };
+    }
+
+    if (endpoint === '/profile/change-password' && method === 'POST') {
+      return { message: 'Senha atualizada com sucesso.' };
+    }
+
+    // fallback — tentar usar fetch real se disponível
+    return (await window.fetch(`${apiBase}${endpoint}`, { ...options })).json();
+  };
+}
+
 function showSection(key) {
   Object.values(sections).forEach((section) => section.classList.add('hidden'));
   const target = sections[key];
