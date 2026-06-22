@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestão de Cobranças e Empréstimos</title>
+  <link rel="stylesheet" href="public/style.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <aside class="side-panel">
+      <div class="brand-block">
+        <span class="brand-mark">G</span>
+        <div>
+          <h1>Jurista Finance</h1>
+          <p>Gestão de Cobranças</p>
+        </div>
+      </div>
+      <nav class="nav-menu">
+        <button class="nav-item active" data-section="dashboard">Dashboard</button>
+        <button class="nav-item" data-section="clientes">Clientes</button>
+        <button class="nav-item" data-section="contratos">Contratos</button>
+        <button class="nav-item" data-section="perfil">Perfil / Segurança</button>
+        <button class="nav-item" data-section="ajuda">Aprenda a usar</button>
+      </nav>
+      <button id="logoutButton" class="secondary-button">Sair</button>
+    </aside>
+
+    <main class="main-area">
+      <section id="loginSection" class="card centered-card">
+        <h2>Login do Administrador</h2>
+        <p>Use o usuário padrão admin / admin123 para acessar.</p>
+        <form id="loginForm" class="form-grid">
+          <label>
+            Usuário
+            <input type="text" id="loginUsername" autocomplete="username" />
+          </label>
+          <label>
+            Senha
+            <input type="password" id="loginPassword" autocomplete="current-password" />
+          </label>
+          <button type="submit" class="accent-button">Entrar</button>
+          <div id="loginMessage" class="message"></div>
+        </form>
+      </section>
+
+      <section id="appShell" class="hidden">
+        <header class="page-header">
+          <div>
+            <h2 id="pageTitle">Dashboard</h2>
+            <p class="subtitle">Painel administrativo de cobranças e contratos</p>
+          </div>
+          <div class="user-chip">
+            <span id="profileUsername">Admin</span>
+          </div>
+        </header>
+
+        <section id="dashboard" class="page-section">
+          <div class="cards-grid">
+            <article class="info-card accent-card">
+              <h3>Total a Receber</h3>
+              <p class="large-value" id="totalReceber">R$ 0,00</p>
+            </article>
+            <article class="info-card">
+              <h3>Vencendo Hoje/Amanhã</h3>
+              <p class="large-value" id="vencendoCount">0 contratos</p>
+            </article>
+            <article class="info-card">
+              <h3>Clientes em Atraso</h3>
+              <p class="large-value" id="atrasoCount">0 pendências</p>
+            </article>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3>Quem está me devendo</h3>
+                <p>Lista de contratos pendentes com contatos rápidos via WhatsApp.</p>
+              </div>
+            </div>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Cliente</th>
+                    <th>Telefone</th>
+                    <th>Vencimento</th>
+                    <th>Valor</th>
+                    <th>Atraso</th>
+                    <th>Ação</th>
+                  </tr>
+                </thead>
+                <tbody id="reminderTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section id="clientes" class="page-section hidden">
+          <div class="card">
+            <div class="card-header">
+              <h3>Cadastrar Cliente</h3>
+            </div>
+            <form id="clienteForm" class="form-grid large-grid">
+              <label>Nome<input type="text" id="clienteNome" /></label>
+              <label>CPF/CNPJ<input type="text" id="clienteCpfCnpj" /></label>
+              <label>Telefone<input type="text" id="clienteTelefone" /></label>
+              <label>WhatsApp<input type="text" id="clienteWhatsapp" /></label>
+              <label>Endereço<input type="text" id="clienteEndereco" /></label>
+              <label>E-mail<input type="email" id="clienteEmail" /></label>
+              <label>Chave Pix<input type="text" id="clientePix" /></label>
+              <button type="submit" class="accent-button">Salvar Cliente</button>
+              <div id="clienteMessage" class="message"></div>
+            </form>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3>Clientes cadastrados</h3>
+            </div>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>CPF/CNPJ</th>
+                    <th>Telefone</th>
+                    <th>WhatsApp</th>
+                    <th>E-mail</th>
+                  </tr>
+                </thead>
+                <tbody id="clientesTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section id="contratos" class="page-section hidden">
+          <div class="card">
+            <div class="card-header">
+              <h3>Cadastrar Contrato</h3>
+            </div>
+            <form id="contratoForm" class="form-grid medium-grid">
+              <label>Cliente
+                <select id="contratoCliente"></select>
+              </label>
+              <label>Valor emprestado (R$)
+                <input type="number" id="contratoValor" step="0.01" min="0" />
+              </label>
+              <label>Data do Empréstimo
+                <input type="date" id="contratoData" />
+              </label>
+              <label>Vencimento
+                <input type="date" id="contratoVencimento" />
+              </label>
+              <button type="submit" class="accent-button">Salvar Contrato</button>
+              <div id="contratoMessage" class="message"></div>
+            </form>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3>Contratos registrados</h3>
+            </div>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Cliente</th>
+                    <th>Valor</th>
+                    <th>Empréstimo</th>
+                    <th>Vencimento</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="contratosTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section id="perfil" class="page-section hidden">
+          <div class="card profile-card">
+            <div class="card-header">
+              <h3>Perfil e Segurança</h3>
+            </div>
+            <p class="small-text">Altere a senha do administrador de forma segura.</p>
+            <form id="senhaForm" class="form-grid small-grid">
+              <label>Senha atual<input type="password" id="currentPassword" /></label>
+              <label>Nova senha<input type="password" id="newPassword" /></label>
+              <button type="submit" class="accent-button">Atualizar Senha</button>
+              <div id="senhaMessage" class="message"></div>
+            </form>
+          </div>
+        </section>
+
+        <section id="ajuda" class="page-section hidden">
+          <div class="card">
+            <div class="card-header">
+              <h3>Aprenda a usar o sistema</h3>
+            </div>
+            <ol class="help-list">
+              <li><strong>Cadastrar um cliente:</strong> acesse a aba "Clientes", preencha os dados e clique em "Salvar Cliente".</li>
+              <li><strong>Criar um contrato:</strong> vá para "Contratos", selecione o cliente, informe valor, data do empréstimo e vencimento.</li>
+              <li><strong>Monitorar lembretes:</strong> no dashboard, verifique quem está devendo, faça a cobrança pelo botão do WhatsApp e acompanhe atrasos.</li>
+              <li><strong>Alterar senha:</strong> na aba "Perfil / Segurança", insira a senha atual e a nova senha para manter sua conta segura.</li>
+            </ol>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script src="public/app.js"></script>
+</body>
+</html>
